@@ -5,8 +5,8 @@ BASE_URL: str = "https://telmunnshop.squareweb.app/api"
 
 class CPMTooldev:
 
-    def __init__(self) -> None:
-        self.auth_token = None
+    def __init__(self, acc_access_key=None) -> None:
+        self.auth_token = acc_access_key  # Store the access key if provided, or None if not
 
     def login(self, email, password) -> int:
         payload = { "account_email": email, "account_password": password }
@@ -51,3 +51,10 @@ class CPMTooldev:
         response = requests.post(f"{BASE_URL}/set_money", data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
+
+# Example of how to use it:
+acc_access_key = "your_access_key_here"
+cpm = CPMTooldev(acc_access_key)
+
+# Call any of the methods after initializing
+# Example: login, get player data, etc.
