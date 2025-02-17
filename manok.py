@@ -8,53 +8,46 @@ class CPMTooldev:
     def __init__(self) -> None:
         self.auth_token = None
 
-    def login(self, email, password, access_key) -> int:
+    def login(self, email, password) -> int:
         payload = { "account_email": email, "account_password": password }
-        params = { "key": access_key }
-        response = requests.post(f"{BASE_URL}/account_login", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/account_login", data=payload)
         response_decoded = response.json()
         if response_decoded.get("ok"):
             self.auth_token = response_decoded.get("auth")
         return response_decoded.get("error")
     
-    def register(self, email, password, access_key) -> int:
+    def register(self, email, password) -> int:
         payload = { "account_email": email, "account_password": password }
-        params = { "key": access_key }
-        response = requests.post(f"{BASE_URL}/account_register", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/account_register", data=payload)
         response_decoded = response.json()
         return response_decoded.get("error")
     
-    def delete(self, access_key):
+    def delete(self):
         payload = { "account_auth": self.auth_token }
-        params = { "key": access_key }
-        requests.post(f"{BASE_URL}/account_delete", params=params, data=payload)
+        requests.post(f"{BASE_URL}/account_delete", data=payload)
 
-    def get_player_data(self, access_key) -> any:
+    def get_player_data(self) -> any:
         payload = { "account_auth": self.auth_token }
-        params = { "key": access_key }
-        response = requests.post(f"{BASE_URL}/get_data", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/get_data", data=payload)
         response_decoded = response.json()
         return response_decoded
     
-    def set_player_rank(self, access_key) -> bool:
+    def set_player_rank(self) -> bool:
         payload = { "account_auth": self.auth_token }
-        params = { "key": access_key }
-        response = requests.post(f"{BASE_URL}/set_rank", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/set_rank", data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
     
-    def get_key_data(self, access_key) -> any:
-        params = { "key": access_key }
-        response = requests.get(f"{BASE_URL}/get_key_data", params=params)
+    def get_key_data(self) -> any:
+        response = requests.get(f"{BASE_URL}/get_key_data")
         response_decoded = response.json()
         return response_decoded
     
-    def set_player_money(self, amount, access_key) -> bool:
+    def set_player_money(self, amount) -> bool:
         payload = {
             "account_auth": self.auth_token,
             "amount": amount
         }
-        params = { "key": access_key }
-        response = requests.post(f"{BASE_URL}/set_money", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/set_money", data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
