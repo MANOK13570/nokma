@@ -11,7 +11,7 @@ from rich.style import Style
 import pystyle
 from pystyle import Colors, Colorate
 
-from manok import CPMTooldev
+from nokma import CPMTooldev
 
 __CHANNEL_USERNAME__ = "NOKMA"
 __GROUP_USERNAME__   = "NOKMA"
